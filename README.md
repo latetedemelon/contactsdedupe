@@ -1,5 +1,16 @@
-# Python-Vcf-Contacts-Duplicates-Merger
-Read a contacts file (.vcf). Compare datasets with identical names. Find unique data fields for each name. If same field with different content found, add another entry to the field. Create merged dataset for each name with all unique fields. Create new vcf with merged contacts (only one vCard per name).
+# Contacts Deduplicator
+1. Importing Data:
+For VCF input, it uses vobject to parse each vCard and stores each contact as an ordered dictionary (thus preserving field order).
+For CSV input, it reads rows (preserving header order).
+2. Deduplication:
+The function deduplicate_contacts compares each contact (using RapidFuzz’s fuzzy matching on phone, email, and full name).
+In linking mode (default when --merge is not provided), it sets “match” and “certainty” fields without merging records.
+In merging mode (when --merge is specified), it either merges duplicate contacts (by combining field values) or, if --dry-run is specified, prints out the potential merges without modifying the data.
+3. Exporting Data:
+For CSV output, it writes a file that begins with “match” and “certainty” columns followed by all other fields in the order they were first encountered.
+For VCF output, it exports only the original vCard fields (excluding “match” and “certainty”), preserving the field order.
+You can run the script from the command line. For example, to merge duplicates from a VCF file and export the merged result to CSV:
+
 
 # How to Use
 1. Download or clone the source code
@@ -8,3 +19,13 @@ Read a contacts file (.vcf). Compare datasets with identical names. Find unique 
 4. Change `input_file_path` variable in `line 4` of file `vcf-duplicates-merger.py` to point the target vcf file.
 5. `python vcf-duplicates-merger.py`
 6. Output file will be created in current directory having filename prefix of `dupmerged_`. 
+
+# Dry Run Example
+```bash
+python script.py --input-file contacts.vcf --input-format vcf --output-file output.csv --output-format csv --threshold 85 --merge --dry-run
+```
+# Merge Example
+
+```bash
+python script.py --input-file contacts.vcf --input-format vcf --output-file output.csv --output-format csv --threshold 85 --merge
+```
