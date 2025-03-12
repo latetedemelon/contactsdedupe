@@ -16,11 +16,9 @@ You can run the script from the command line. For example, to merge duplicates f
 1. Download or clone the source code
 2. Open terminal inside the downloaded folder
 3. `pip install -r requirements.txt`
-4. Change `input_file_path` variable in `line 4` of file `vcf-duplicates-merger.py` to point the target vcf file.
-5. `python vcf-duplicates-merger.py`
-6. Output file will be created in current directory having filename prefix of `dupmerged_`. 
+5. `python contact-merge.py --input-file contacts.vcf --input-format vcf --output-file output.vsf --output-format vsf --threshold 85`
 
-# Dry Run Example
+# Dry Run Example with Merge
 ```bash
 python script.py --input-file contacts.vcf --input-format vcf --output-file output.csv --output-format csv --threshold 85 --merge --dry-run
 ```
