@@ -1,1 +1,7 @@
 vobject
+rapidfuzz
+argparse
+csv
+re
+sys
+collections
